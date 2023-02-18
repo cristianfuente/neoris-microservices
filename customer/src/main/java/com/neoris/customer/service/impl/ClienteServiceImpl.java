@@ -27,10 +27,10 @@ public class ClienteServiceImpl implements IClienteService {
 
     @Override
     @Transactional(timeout = 30)
-    public Cliente crearCliente(ClienteDTO clienteDTO) {
+    public ClienteDTO crearCliente(ClienteDTO clienteDTO) {
         try {
             Cliente cliente = IClienteMapper.INSTANCE.toCliente(clienteDTO);
-            return this.clienteRepository.guardarCliente(cliente);
+            return IClienteMapper.INSTANCE.toClienteDTO(this.clienteRepository.guardarCliente(cliente));
         } catch (Exception e) {
             LOGGER.error("Error en la creacion del cliente {}", e.getMessage());
             throw new ResponseStatusException(HttpStatus.INTERNAL_SERVER_ERROR, "Error inesperado");

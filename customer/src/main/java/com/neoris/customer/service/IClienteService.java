@@ -7,6 +7,6 @@ import org.springframework.stereotype.Service;
 @Service
 public interface IClienteService {
 
-    Cliente crearCliente(ClienteDTO clienteDTO);
+    ClienteDTO crearCliente(ClienteDTO clienteDTO);
 
 }
