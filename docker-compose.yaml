@@ -1,0 +1,8 @@
+version: '3'
+services:
+  mi_servicio:
+    build:
+      context: ./customer/docker
+      dockerfile: Dockerfile
+    image: customer:latest
+
