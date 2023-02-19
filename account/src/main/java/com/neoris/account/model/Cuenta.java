@@ -35,5 +35,4 @@ public class Cuenta {
     private Cliente cliente;
 
 
-
 }

@@ -1,4 +1,4 @@
-package com.neoris.account.service;
+package com.neoris.account.event;
 
 import com.fasterxml.jackson.databind.DeserializationFeature;
 import com.fasterxml.jackson.databind.ObjectMapper;

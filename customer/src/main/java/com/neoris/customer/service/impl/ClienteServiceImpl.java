@@ -12,6 +12,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.http.HttpStatus;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 import org.springframework.web.server.ResponseStatusException;
 
 @Service
@@ -26,10 +27,11 @@ public class ClienteServiceImpl implements IClienteService {
     }
 
     @Override
-    public ClienteDTO crearCliente(ClienteDTO clienteDTO) {
+    @Transactional
+    public Cliente crearCliente(ClienteDTO clienteDTO) {
         try {
             Cliente cliente = IClienteMapper.INSTANCE.toCliente(clienteDTO);
-            return IClienteMapper.INSTANCE.toClienteDTO(this.clienteRepository.guardarCliente(cliente));
+            return this.clienteRepository.guardarCliente(cliente);
         } catch (Exception e) {
             LOGGER.error("Error en la creacion del cliente: {}", e.getMessage());
             throw new ResponseStatusException(HttpStatus.INTERNAL_SERVER_ERROR, Constantes.ERROR_INESPERADO);
