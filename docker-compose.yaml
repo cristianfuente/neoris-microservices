@@ -1,8 +1,37 @@
-version: '3'
+version: '3.9'
 services:
-  mi_servicio:
+  customer:
     build:
-      context: ./customer/docker
-      dockerfile: Dockerfile
+      context: ./customer
+      dockerfile: ./docker/Dockerfile
+      args:
+        - BUILD_COMMAND=docker build ./customer -f ./customer/docker/Dockerfile -t customer --no-cache
     image: customer:latest
+    networks:
+      - my-network
+    ports:
+      - 8000:8000
+    depends_on:
+      - kafka
+  zookeeper:
+    image: wurstmeister/zookeeper
+    container_name: zookeeper
+    networks:
+      - my-network
+    ports:
+      - "2181:2181"
+  kafka:
+    image: wurstmeister/kafka
+    container_name: kafka
+    networks:
+      - my-network
+    ports:
+      - "9092:9092"
+    environment:
+      KAFKA_ADVERTISED_HOST_NAME: localhost
+      KAFKA_ZOOKEEPER_CONNECT: zookeeper:2181
+      KAFKA_CREATE_TOPICS: "my-topic:1:1"
 
+networks:
+  my-network:
+    driver: bridge
