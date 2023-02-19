@@ -26,7 +26,6 @@ public class ClienteServiceImpl implements IClienteService {
     }
 
     @Override
-    @Transactional(timeout = 30)
     public ClienteDTO crearCliente(ClienteDTO clienteDTO) {
         try {
             Cliente cliente = IClienteMapper.INSTANCE.toCliente(clienteDTO);
