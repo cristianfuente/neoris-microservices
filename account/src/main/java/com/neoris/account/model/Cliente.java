@@ -1,4 +1,4 @@
-package com.neoris.customer.model;
+package com.neoris.account.model;
 
 import lombok.Getter;
 import lombok.NoArgsConstructor;
@@ -8,17 +8,17 @@ import javax.persistence.*;
 
 @Getter
 @Setter
-@Entity
 @NoArgsConstructor
+@Entity
 @Table(name = "CLIENTE", schema = "public")
-public class Cliente extends Persona {
+public class Cliente {
 
     @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
     @Column
-    private String password;
-    @Column
     private Boolean state;
-
+    @Column
+    private String nombre;
+    @Column
+    private String identificacion;
 }

@@ -3,6 +3,7 @@ package com.neoris.customer.controller;
 import com.neoris.customer.dto.ClienteDTO;
 import com.neoris.customer.event.IEventService;
 import com.neoris.customer.service.IClienteService;
+import com.neoris.customer.util.Constantes;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -37,13 +38,13 @@ public class ClienteController {
     public ResponseEntity<ClienteDTO> crearCliente(@Valid @RequestBody ClienteDTO clienteDTO) {
         try {
             ClienteDTO clienteCreadoDTO = clienteService.crearCliente(clienteDTO);
-            LOGGER.info("Cliente creado");
+            LOGGER.info("Cliente creado en base de datos");
             this.eventService.sendClientCreatedEvent(clienteCreadoDTO);
-            LOGGER.info("Evento de creacion de cliente en la cola de mensajeria");
+            LOGGER.info("{} : {}", Constantes.TRY_EVENT, clienteDTO.getId());
             return new ResponseEntity<>(clienteCreadoDTO, HttpStatus.CREATED);
         } catch (Exception e) {
             LOGGER.error(e.getMessage());
-            throw new ResponseStatusException(HttpStatus.INTERNAL_SERVER_ERROR, "Error inesperado");
+            throw new ResponseStatusException(HttpStatus.INTERNAL_SERVER_ERROR, Constantes.ERROR_INESPERADO);
         }
     }
 }

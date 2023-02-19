@@ -1,6 +1,1 @@
-docker-compose -f docker-compose-kafka.yml up -d
-docker-compose -f docker-compose-kafka.yml exec account mvn clean install
-docker-compose -f docker-compose-kafka.yml exec customer mvn clean install
-docker-compose -f docker-compose-kafka.yml exec movements mvn clean install
-docker-compose -f docker-compose-kafka.yml down
-docker-compose -f docker-compose-services.yml up
+docker-compose -f docker-compose-kafka.yml up -d && cd account && mvn clean install && cd ..\customer && mvn clean install && cd ..\movements && mvn clean install && cd .. && docker-compose -f docker-compose-kafka.yml down && docker-compose -f docker-compose-services.yml up
