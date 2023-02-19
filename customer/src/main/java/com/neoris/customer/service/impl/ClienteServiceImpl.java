@@ -5,6 +5,7 @@ import com.neoris.customer.mapper.IClienteMapper;
 import com.neoris.customer.model.Cliente;
 import com.neoris.customer.repository.IClienteRepository;
 import com.neoris.customer.service.IClienteService;
+import com.neoris.customer.util.Constantes;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -26,13 +27,14 @@ public class ClienteServiceImpl implements IClienteService {
     }
 
     @Override
-    public ClienteDTO crearCliente(ClienteDTO clienteDTO) {
+    @Transactional
+    public Cliente crearCliente(ClienteDTO clienteDTO) {
         try {
             Cliente cliente = IClienteMapper.INSTANCE.toCliente(clienteDTO);
-            return IClienteMapper.INSTANCE.toClienteDTO(this.clienteRepository.guardarCliente(cliente));
+            return this.clienteRepository.guardarCliente(cliente);
         } catch (Exception e) {
-            LOGGER.error("Error en la creacion del cliente {}", e.getMessage());
-            throw new ResponseStatusException(HttpStatus.INTERNAL_SERVER_ERROR, "Error inesperado");
+            LOGGER.error("Error en la creacion del cliente: {}", e.getMessage());
+            throw new ResponseStatusException(HttpStatus.INTERNAL_SERVER_ERROR, Constantes.ERROR_INESPERADO);
         }
     }
 }

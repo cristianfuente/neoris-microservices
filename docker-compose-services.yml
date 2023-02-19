@@ -15,6 +15,21 @@ services:
       SPRING_KAFKA_BOOTSTRAP_SERVERS: kafka:9092
     networks:
       - my-network
+  account:
+    build:
+      context: ./account
+      dockerfile: ./docker/Dockerfile
+      args:
+        - BUILD_COMMAND=docker build ./account -f ./account/docker/Dockerfile -t account --no-cache
+    image: account:latest
+    ports:
+      - 8001:8001
+    depends_on:
+      - kafka
+    environment:
+      SPRING_KAFKA_BOOTSTRAP_SERVERS: kafka:9092
+    networks:
+      - my-network
   zookeeper:
     image: 'bitnami/zookeeper:latest'
     container_name: zookeeper
