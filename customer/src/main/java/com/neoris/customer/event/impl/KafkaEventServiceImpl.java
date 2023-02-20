@@ -27,13 +27,13 @@ public class KafkaEventServiceImpl implements IEventService {
     @Override
     public void sendClientCreatedEvent(ClienteDTO clienteDTO) {
         try {
+            LOGGER.info("{} : {}", Constantes.TRY_EVENT, clienteDTO.getId());
             ObjectMapper objectMapper = new ObjectMapper();
             ListenableFuture<SendResult<String, String>> future = kafkaTemplate.send(Constantes.TOPIC_CREAR_CLIENTE, objectMapper.writeValueAsString(clienteDTO));
             future.addCallback(new ListenableFutureCallback<>() {
                 @Override
                 public void onFailure(Throwable ex) {
                     LOGGER.error("{} : {}", Constantes.ERROR_EVENT, ex.getMessage());
-                    LOGGER.info("{} : {}", Constantes.TRY_EVENT, clienteDTO.getId());
                     sendClientCreatedEvent(clienteDTO);
                 }
 
