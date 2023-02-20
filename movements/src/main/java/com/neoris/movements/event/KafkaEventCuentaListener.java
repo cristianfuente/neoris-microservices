@@ -25,10 +25,10 @@ public class KafkaEventCuentaListener {
     }
 
     @KafkaListener(topics = {"cuenta_creada", "cuenta_actualizada"}, groupId = "cuenta")
-    public void listenChangeCuentaEvents(String cuentaJson){
+    public void listenChangeCuentaEvents(String cuentaJson) {
         try {
             guardarCuenta(cuentaJson);
-        }catch (Exception e){
+        } catch (Exception e) {
             LOGGER.error("Error procesando eventos de cuenta: {}", e.getMessage());
         }
     }

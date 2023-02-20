@@ -7,6 +7,7 @@ import org.springframework.transaction.annotation.Transactional;
 
 @Service
 public interface IMovimientoService {
+
     @Transactional
-    Movimiento registrarMovimiento(MovimientoDTO movimientoDTO);
+    Movimiento operarMovimiento(MovimientoDTO movimientoDTO);
 }

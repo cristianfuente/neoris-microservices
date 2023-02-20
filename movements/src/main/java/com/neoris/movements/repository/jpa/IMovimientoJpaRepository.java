@@ -9,7 +9,7 @@ import org.springframework.stereotype.Repository;
 public interface IMovimientoJpaRepository extends JpaRepository<Movimiento, Long>, IMovimientoRepository {
 
     @Override
-    default Movimiento guardarMovimiento(Movimiento movimiento){
+    default Movimiento guardarMovimiento(Movimiento movimiento) {
         return save(movimiento);
     }
 

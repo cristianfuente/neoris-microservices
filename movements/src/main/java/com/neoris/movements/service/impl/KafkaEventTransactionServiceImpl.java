@@ -22,9 +22,9 @@ public class KafkaEventTransactionServiceImpl implements IEventTransactionServic
     }
 
     @Override
-    public void sendJson(String topic, String json){
+    public void sendJson(String topic, String json) {
         ListenableFuture<SendResult<String, String>> future = kafkaTemplate.send(topic, json);
-        future.addCallback(new ListenableFutureCallback<SendResult<String, String>>() {
+        future.addCallback(new ListenableFutureCallback<>() {
             @Override
             public void onFailure(Throwable ex) {
                 LOGGER.error("{} : {}", "Error", ex.getMessage());

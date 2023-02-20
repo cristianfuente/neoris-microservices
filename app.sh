@@ -1,15 +1,13 @@
 #!/bin/bash
-
+docker compose -f docker-compose-kafka.yml up -d
 cd account
-docker-compose up -d
 sh ./mvnw clean install
-docker-compose down
-
 cd ../customer
 sh ./mvnw clean install
-
 cd ../movements
 sh ./mvnw clean install
 
+
 cd ..
-docker-compose up -d
+docker compose -f docker-compose-kafka.yml down
+docker compose -f docker-compose-services.yml up
