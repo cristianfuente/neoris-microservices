@@ -39,7 +39,6 @@ public class ClienteController {
             ClienteDTO clienteCreadoDTO = IClienteMapper.INSTANCE.toClienteDTO(this.clienteService.crearCliente(clienteDTO));
             LOGGER.info("Cliente creado en base de datos");
             this.eventService.sendClientCreatedEvent(clienteCreadoDTO);
-            LOGGER.info("{} : {}", Constantes.TRY_EVENT, clienteDTO.getId());
             return new ResponseEntity<>(clienteCreadoDTO, HttpStatus.CREATED);
         } catch (Exception e) {
             LOGGER.error(e.getMessage());

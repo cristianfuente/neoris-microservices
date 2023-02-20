@@ -2,6 +2,7 @@ package com.neoris.account.service.impl;
 
 import com.neoris.account.dto.CuentaDTO;
 import com.neoris.account.mapper.ICuentaMapper;
+import com.neoris.account.model.Cliente;
 import com.neoris.account.model.Cuenta;
 import com.neoris.account.repository.IClienteRepository;
 import com.neoris.account.repository.ICuentaRepository;
@@ -12,9 +13,9 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.http.HttpStatus;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 import org.springframework.web.server.ResponseStatusException;
 
-import javax.transaction.Transactional;
 
 @Service
 public class CuentaServiceImpl implements ICuentaService {
@@ -34,8 +35,11 @@ public class CuentaServiceImpl implements ICuentaService {
     @Transactional
     public Cuenta crearCuenta(CuentaDTO cuentaDTO) {
         try {
+            Cliente cliente = clienteRepository.findClienteById(cuentaDTO.getIdCliente())
+                    .orElseThrow(() -> new ResponseStatusException(HttpStatus.NOT_FOUND));
             Cuenta cuenta = ICuentaMapper.INSTANCE.toCuenta(cuentaDTO);
-            return this.cuentaRepository.crearCuenta(cuenta);
+            cuenta.setCliente(cliente);
+            return cuentaRepository.crearCuenta(cuenta);
         } catch (Exception e) {
             LOGGER.error("Error creacion de cuenta: {}", e.getMessage());
             throw new ResponseStatusException(HttpStatus.INTERNAL_SERVER_ERROR, "Error creacion de cuenta");

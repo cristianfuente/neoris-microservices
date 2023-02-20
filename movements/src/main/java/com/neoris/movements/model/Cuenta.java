@@ -1,11 +1,13 @@
-package com.neoris.account.model;
+package com.neoris.movements.model;
 
-import com.fasterxml.jackson.annotation.JsonIgnore;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
 
-import javax.persistence.*;
+import javax.persistence.Column;
+import javax.persistence.Entity;
+import javax.persistence.Id;
+import javax.persistence.Table;
 import java.math.BigDecimal;
 
 @Getter
@@ -16,7 +18,6 @@ import java.math.BigDecimal;
 public class Cuenta {
 
     @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
     @Column(name = "numero_cuenta", unique = true)
     private String numeroCuenta;
@@ -28,11 +29,7 @@ public class Cuenta {
     private Boolean estado;
     @Column(name = "id_cliente")
     private Long idCliente;
-
-    @JsonIgnore
-    @ManyToOne(fetch = FetchType.LAZY)
-    @JoinColumn(name = "id_cliente", insertable = false, updatable = false)
-    private Cliente cliente;
-
+    @Column(name = "nombre_cliente")
+    private String nombreCliente;
 
 }
